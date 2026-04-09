@@ -3,197 +3,594 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIDO AI v3.5 - النسخة الفاخرة المطورة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Mido Bio-Core v4.0 - Advanced Biology (Hormones)</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
+        /* المتغيرات الأساسية (الثيم الافتراضي - سايبر بلو) */
         :root {
-            --primary: #c084fc;
-            --bg: #050507;
-            --surface: #101014;
-            --border: #22222a;
-            --text: #ffffff;
-            --user-bubble: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --bg-dark: #050a10;
+            --card-glass: rgba(15, 25, 35, 0.7);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --text-main: #e0e6ed;
+            --hl-func: #00ff88;
+            --hl-patho: #ff4d4d;
+            --hl-link: #fbff00;
+            --particle-color: #00f2fe;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        
-        body { background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
-
-        /* Sidebar */
-        .sidebar { width: 280px; background: var(--surface); border-left: 1px solid var(--border); display: flex; flex-direction: column; }
-        .brand { padding: 25px; font-size: 24px; font-weight: 900; color: var(--primary); letter-spacing: 2px; text-align: center; border-bottom: 1px solid var(--border); }
-        .chat-list { flex: 1; overflow-y: auto; padding: 15px; }
-        .new-btn { margin: 15px; padding: 12px; background: var(--primary); border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .new-btn:hover { opacity: 0.8; transform: translateY(-2px); }
-
-        /* Main Chat Area */
-        .main { flex: 1; display: flex; flex-direction: column; background: radial-gradient(circle at top right, #111, #050507); }
-        
-        .chat-window { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
-        .bubble { max-width: 75%; padding: 15px 20px; border-radius: 20px; font-size: 16px; line-height: 1.6; animation: slideUp 0.3s ease-out; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .bot { background: #1a1a22; align-self: flex-start; border-bottom-right-radius: 5px; border: 1px solid var(--border); }
-        .user { background: var(--user-bubble); align-self: flex-end; border-bottom-left-radius: 5px; box-shadow: 0 5px 15px rgba(124, 58, 237, 0.3); }
-
-        /* مكان الكتابة المطور - الميزة المطلوبة */
-        .input-area {
-            padding: 25px 40px;
-            background: rgba(16, 16, 20, 0.95);
-            border-top: 1px solid var(--border);
-            display: flex;
-            align-items: flex-end;
-            gap: 15px;
-            backdrop-filter: blur(10px);
+        /* 1. Neon Matrix */
+        [data-theme="matrix"] {
+            --primary: #00ff41;
+            --secondary: #008f11;
+            --bg-dark: #000000;
+            --card-glass: rgba(0, 20, 0, 0.8);
+            --text-main: #e0ffe0;
+            --hl-func: #00ffcc;
+            --hl-patho: #ff3333;
+            --particle-color: #00ff41;
         }
 
-        .input-container {
-            flex: 1;
-            background: #1a1a22;
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 10px 15px;
-            transition: 0.3s;
+        /* 2. Crimson Blood */
+        [data-theme="blood"] {
+            --primary: #ff003c;
+            --secondary: #8a0303;
+            --bg-dark: #0a0000;
+            --card-glass: rgba(30, 0, 5, 0.8);
+            --text-main: #ffe6e6;
+            --hl-func: #ffcc00;
+            --hl-patho: #ff0000;
+            --particle-color: #ff003c;
         }
-        .input-container:focus-within { border-color: var(--primary); box-shadow: 0 0 10px rgba(192, 132, 252, 0.2); }
 
-        textarea {
+        /* 3. Royal Amethyst */
+        [data-theme="amethyst"] {
+            --primary: #d600ff;
+            --secondary: #6600ff;
+            --bg-dark: #0a0014;
+            --card-glass: rgba(20, 0, 30, 0.8);
+            --text-main: #f0e6ff;
+            --hl-func: #00ffff;
+            --hl-patho: #ff0066;
+            --particle-color: #d600ff;
+        }
+
+        /* 4. Solar Flare */
+        [data-theme="solar"] {
+            --primary: #ff8c00;
+            --secondary: #ff0000;
+            --bg-dark: #140500;
+            --card-glass: rgba(35, 10, 0, 0.8);
+            --text-main: #ffebd6;
+            --hl-func: #ffff00;
+            --hl-patho: #ff3300;
+            --particle-color: #ff8c00;
+        }
+
+        /* 5. Deep Ocean */
+        [data-theme="ocean"] {
+            --primary: #00e5ff;
+            --secondary: #001f3f;
+            --bg-dark: #000814;
+            --card-glass: rgba(0, 15, 30, 0.8);
+            --text-main: #d6faff;
+            --hl-func: #00ffaa;
+            --hl-patho: #ff6666;
+            --particle-color: #00e5ff;
+        }
+
+        /* 6. Bio-Hazard */
+        [data-theme="hazard"] {
+            --primary: #ffee00;
+            --secondary: #333300;
+            --bg-dark: #0a0a00;
+            --card-glass: rgba(25, 25, 0, 0.8);
+            --text-main: #ffffcc;
+            --hl-func: #00ff00;
+            --hl-patho: #ff0000;
+            --particle-color: #ffee00;
+        }
+
+        /* 7. Monochrome Tech */
+        [data-theme="mono"] {
+            --primary: #ffffff;
+            --secondary: #888888;
+            --bg-dark: #050505;
+            --card-glass: rgba(20, 20, 20, 0.8);
+            --text-main: #ffffff;
+            --hl-func: #cccccc;
+            --hl-patho: #555555;
+            --particle-color: #ffffff;
+        }
+
+        /* 8. Forest Synapse */
+        [data-theme="forest"] {
+            --primary: #2ecc71;
+            --secondary: #1abc9c;
+            --bg-dark: #01140a;
+            --card-glass: rgba(5, 30, 15, 0.8);
+            --text-main: #e6ffed;
+            --hl-func: #f1c40f;
+            --hl-patho: #e74c3c;
+            --particle-color: #2ecc71;
+        }
+
+        /* 9. Quantum Gold */
+        [data-theme="gold"] {
+            --primary: #ffd700;
+            --secondary: #b8860b;
+            --bg-dark: #120f00;
+            --card-glass: rgba(30, 25, 0, 0.8);
+            --text-main: #fffdf0;
+            --hl-func: #00ffcc;
+            --hl-patho: #ff3333;
+            --particle-color: #ffd700;
+        }
+
+        /* 10. Void Walker (Dark Matter) */
+        [data-theme="void"] {
+            --primary: #8a2be2;
+            --secondary: #000000;
+            --bg-dark: #030005;
+            --card-glass: rgba(10, 0, 20, 0.7);
+            --text-main: #e0d6ff;
+            --hl-func: #00ffcc;
+            --hl-patho: #ff0055;
+            --particle-color: #8a2be2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* محرك الجزيئات الخلفي */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            background: transparent;
-            border: none;
-            color: white;
-            resize: none;
-            font-size: 16px;
-            max-height: 150px;
-            min-height: 24px;
-            outline: none;
-            padding: 5px 0;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, rgba(16, 32, 48, 0.3) 0%, var(--bg-dark) 100%);
         }
 
-        .send-btn {
-            background: var(--primary);
-            width: 50px;
-            height: 50px;
-            border: none;
-            border-radius: 15px;
-            color: white;
-            cursor: pointer;
+        header {
+            padding: 20px 5%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-glass);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo { 
+            font-size: 26px; 
+            font-weight: 900; 
+            color: var(--primary); 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            text-shadow: 0 0 10px var(--primary);
+            transition: color 0.5s ease, text-shadow 0.5s ease;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            padding: 0 20px;
+        }
+
+        .hero-box {
+            grid-column: 1 / -1;
+            padding: 60px;
+            background: var(--card-glass);
+            border-radius: 30px;
+            border: 1px solid var(--border-glass);
+            text-align: center;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        /* تعديل البطاقات */
+        .card {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover { 
+            border-color: var(--primary); 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--primary); 
+            transform: scale(1.03) translateY(-5px);
+            z-index: 10;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .card:hover::before { opacity: 1; }
+
+        h2, h3 { color: var(--primary); margin-bottom: 20px; transition: color 0.5s ease; }
+        
+        .section-title {
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-            flex-shrink: 0;
+            gap: 10px;
+            font-size: 1.4rem;
+            border-right: 5px solid var(--primary);
+            padding-right: 15px;
         }
-        .send-btn:hover { transform: scale(1.05); background: #a855f7; }
-        .send-btn svg { width: 24px; height: 24px; fill: currentColor; }
 
-        /* القصيدة */
-        .poem { text-align: center; color: #d8b4fe; font-style: italic; display: block; margin: 5px 0; }
+        ul { list-style: none; }
+        li { margin-bottom: 15px; position: relative; padding-right: 25px; }
+        li::before { content: '◈'; position: absolute; right: 0; color: var(--primary); transition: color 0.5s ease; }
 
-        #typing { display: none; padding: 0 40px 10px; font-size: 13px; color: var(--primary); }
+        .func { color: var(--hl-func); font-weight: bold; }
+        .patho { color: var(--hl-patho); font-weight: bold; }
+        .link { color: var(--hl-link); border-bottom: 1px dashed var(--hl-link); }
+
+        .badge {
+            background: var(--primary);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--primary);
+            transition: background 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        /* نافذة التحكم */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1001;
+        }
+
+        .settings-panel {
+            background: var(--card-glass);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+            display: none;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            color: white;
+        }
+
+        .active { display: block; animation: fadeIn 0.3s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        button {
+            padding: 10px 25px;
+            border-radius: 12px;
+            border: 1px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        button:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        select, input[type="range"] {
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            padding: 8px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+        }
     </style>
 </head>
 <body>
 
-<div class="sidebar">
-    <div class="brand">MIDO AI</div>
-    <button class="new-btn" onclick="location.reload()">+ محادثة جديدة</button>
-    <div class="chat-list" id="chat-list"></div>
+<canvas id="particle-canvas"></canvas>
+
+<header>
+    <div class="logo">Mido </div>
+    <button onclick="document.querySelector('.settings-panel').classList.toggle('active')">⚙️الاعدادات</button>
+</header>
+
+<div class="controls">
+    <div class="settings-panel">
+        <h4 style="margin-bottom: 15px; color: var(--primary); text-align: center;">النظام البيئي</h4>
+        
+        <label>🎨 اختيار الثيم </label>
+        <select id="themeSelector" onchange="changeTheme()">
+            <option value="default">🌐 Cyber Blue (الافتراضي)</option>
+            <option value="matrix">💻 Neon Matrix (ماتريكس)</option>
+            <option value="blood">🩸 Crimson Blood (الدموي)</option>
+            <option value="amethyst">🔮 Royal Amethyst (الأرجواني)</option>
+            <option value="solar">☀️ Solar Flare (الشمسي)</option>
+            <option value="ocean">🌊 Deep Ocean (المحيط)</option>
+            <option value="hazard">☣️ Bio-Hazard (الإشعاعي)</option>
+            <option value="forest">🌲 Forest Synapse (البيولوجي)</option>
+            <option value="gold">👑 Quantum Gold (الذهبي)</option>
+            <option value="void">🌌 Void Walker (المادة المظلمة)</option>
+            <option value="mono">⚙️ Monochrome Tech (أحادي اللون)</option>
+        </select>
+
+        <label>✨ كثافة الجسيمات</label>
+        <input type="range" id="pCount" min="20" max="400" value="150" onchange="initParticles()">
+        
+        <label>⚡ سرعة التفاعل</label>
+        <input type="range" id="pSpeed" min="0.5" max="5" value="1.5" step="0.5">
+    </div>
 </div>
 
-<div class="main">
-    <div class="chat-window" id="chat-window">
-        <div class="bubble bot">إيه يا زميلي.. نورت الشات الفخم. أنا ميدو، اؤمرني عايز ندردش ولا أرسم لك صورة من خيالك؟</div>
+<div class="container">
+    <div class="hero-box">
+        <h1 style="font-size: 2.5rem; text-shadow: 0 0 20px var(--primary); color: var(--primary);">الهرمونات</h1>
+        <p style="font-size: 1.2rem; margin-top: 15px;">الفصل الثاني: التنسيق الهرموني في الكائنات الحية - الصف الثالث الثانوي 2025/2026</p>
     </div>
-    
-    <div id="typing">ميدو بيفكر في الرد...</div>
 
-    <div class="input-area">
-        <div class="input-container">
-            <textarea id="chat-in" placeholder="اكتب رسالتك هنا يا برنس..." rows="1" oninput="autoResize(this)"></textarea>
-        </div>
-        <button class="send-btn" onclick="processInput()">
-            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-        </button>
+    <div class="card">
+        <span class="badge">History of Discovery</span>
+        <h3 class="section-title">🔬 اكتشاف الهرمونات الحيوانية</h3>
+        <ul>
+            <li><strong>كلود برنار (1855):</strong> درس الكبد واعتبر السكر المدخر فيه <span class="func">إفرازاً داخلياً</span> والصفراء <span class="func">إفرازاً خارجياً</span>.</li>
+            <li><strong>ستارلينج (1905):</strong> اكتشف أن البنكرياس يفرز عصارته الهاضمة فور وصول الغذاء للاثنى عشر حتى بعد قطع الاتصال العصبي.</li>
+            <li><strong>الاستنتاج:</strong> هناك رسائل كيميائية تفرز في الدم للتحكم في الأعضاء، أسماها <span class="link">الهرمونات</span> (كلمة يونانية تعني المواد المنشطة).</li>
+        </ul>
     </div>
+
+    <div class="card">
+        <span class="badge">Plant Hormones</span>
+        <h3 class="section-title">🌱 الأوكسينات (بويسن جينسن)</h3>
+        <ul>
+            <li><strong>المصدر:</strong> تفرز من القمم النامية والبراعم (لا تمتلك النباتات غدداً متخصصة). من أشهرها <span class="func">إندول حمض الخليك</span>.</li>
+            <li><strong>الانتحاء:</strong> استطاع بويسن جينسن (1913) تفسير الانتحاء الضوئي بانتقال الأوكسينات من منطقة الاستقبال للنمو.</li>
+            <li><strong>الأهمية:</strong> تنظم تتابع نمو الأنسجة، تؤثر على النمو (بالتنشيط أو <span class="patho">التثبيط</span>)، وتتحكم في موعد تفتح الأزهار وتساقط الأوراق.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <span class="badge">Biochemical Properties</span>
+        <h3 class="section-title">🧬 خصائص الهرمونات الحيوانية</h3>
+        <ul>
+            <li><strong>التركيب الكيميائي:</strong> مواد عضوية، بعضها بروتينات معقدة، والبعض الآخر أحماض أمينية، أو مواد دهنية <span class="link">(الاستيرويدات)</span>.</li>
+            <li><strong>الكمية:</strong> تفرز بكميات ضئيلة جداً تقدر بالميكروجرام (1/1000 من المليجرام) لأداء وظيفتها بدقة.</li>
+            <li><strong>الأهمية:</strong> حفظ الاتزان الداخلي، نمو الجسم، النضج الجنسي، والتمثيل الغذائي، بالإضافة لتنظيم السلوك والعاطفة.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <span class="badge">The Master Gland</span>
+        <h3 class="section-title">👑 الغدة النخامية (المايسترو) - الفص الغدي</h3>
+        <ul>
+            <li><strong>هرمون النمو (GH):</strong> يتحكم في أيض البروتين، ونقصه يسبب القزامة، وزيادته تسبب العملقة (أطفال) أو <span class="patho">الأكروميجالي</span> (بالغين).</li>
+            <li><strong>الهرمونات المنبهة للغدد:</strong> تشمل <span class="link">TSH</span> (لدرقية)، و <span class="link">ACTH</span> (لقشرة الكظرية)، و البرولاكتين (لإفراز اللبن).</li>
+            <li><strong>هرمونات المناسل:</strong> <span class="func">FSH</span> (يُكوّن حويصلة جراف والأنيبيبات المنوية) و <span class="func">LH</span> (يُكوّن الجسم الأصفر والخلايا البينية).</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <span class="badge">Neurohypophysis</span>
+        <h3 class="section-title">⚡ الغدة النخامية - الجزء العصبي</h3>
+        <ul>
+            <li><strong>المصدر الأصلي:</strong> تفرز من الخلايا العصبية المفرزة بمنطقة <span class="func">تحت المهاد (الهيبوثلاموس)</span>.</li>
+            <li><strong>الهرمون القابض للأوعية (ADH):</strong> يقلل كمية البول (يعيد امتصاص الماء بالكليون) ويرفع ضغط الدم <span class="link">(علاقة طردية مع الأسموزية)</span>.</li>
+            <li><strong>الهرمون المنبه للرحم (Oxytocin):</strong> ينظم تقلصات الرحم ويزيدها بشدة أثناء الولادة، ويشجع نزول الحليب كاستجابة للرضاعة.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <span class="badge">Metabolism Core</span>
+        <h3 class="section-title">🦋 الغدة الدرقية (غدة النشاط)</h3>
+        <ul>
+            <li><strong>الثيروكسين:</strong> يحتاج لعنصر <span class="func">اليود</span>. يتحكم في معدل الأيض الأساسي، نمو القوى العقلية والبدنية، وامتصاص السكريات الأحادية.</li>
+            <li><strong>الكالسيتونين:</strong> يقلل نسبة الكالسيوم في الدم ويمنع سحبه من العظام.</li>
+            <li><strong>أمراض الخلل:</strong> التضخم البسيط (نقص يود). نقصه الحاد يسبب القماءة (أطفال) أو <span class="patho">الميكسيديما</span> (بالغين). زيادته تسبب التضخم الجحوظي.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <span class="badge">Calcium Balance</span>
+        <h3 class="section-title">🦴 الغدد الجار درقية</h3>
+        <ul>
+            <li><strong>الوصف:</strong> أربعة أجزاء صغيرة توجد على السطح الخلفي للغدة الدرقية (اثنتان على كل فص).</li>
+            <li><strong>الباراثورمون:</strong> يفرز عند <span class="patho">انخفاض</span> نسبة الكالسيوم بالدم، فيقوم بسحبه من العظام لتعويض النقص.</li>
+            <li><strong>الخلل:</strong> زيادته تجعل العظام هشة (تتعرض للانحناء والكسر). ونقصه يسبب تشنجات عضلية مؤلمة وسرعة الانفعال والغضب.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <span class="badge">Steroid Factory</span>
+        <h3 class="section-title">🛡️ الغدة الكظرية - هرمونات القشرة</h3>
+        <ul>
+            <li><strong>الطبيعة:</strong> هرمونات دهنية (استيرويدات)، تقسم لثلاث مجموعات رئيسية.</li>
+            <li><strong>السكريات:</strong> الكورتيزون والكورتيكوستيرون لتنظيم أيض الكربوهيدرات بالجسم.</li>
+            <li><strong>المعدنية:</strong> <span class="func">الألدوستيرون</span> يعيد امتصاص الصوديوم ويتخلص من البوتاسيوم عبر الكليتين.</li>
+            <li><strong>الجنسية:</strong> هرمونات تشبه التستوستيرون والاستروجين. خللها مع المناسل يؤدي لظهور عوارض الذكورة بالإناث أو العكس، و <span class="patho">ضمور المناسل</span>.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <span class="badge">Emergency System</span>
+        <h3 class="section-title">🚨 الغدة الكظرية - هرمونات النخاع</h3>
+        <ul>
+            <li><strong>هرمونات الطوارئ:</strong> الأدرينالين والنورأدرينالين، يفرزان في حالات الخوف، الغضب، والانفعال (تحت سيطرة عصبية).</li>
+            <li><strong>الوظيفة:</strong> تحويل جليكوجين الكبد لجلوكوز لمواجهة الخطر.</li>
+            <li><strong>الآثار المباشرة:</strong> زيادة قوة وسرعة ضربات القلب، ورفع ضغط الدم لتوصيل الأكسجين للعضلات بأقصى سرعة.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <span class="badge">Dual Gland</span>
+        <h3 class="section-title">⚖️ البنكرياس (جزر لانجرهانز)</h3>
+        <ul>
+            <li><strong>غدة مشتركة:</strong> تفرز إنزيمات هاضمة في القناة (خلايا حويصلية)، وهرمونات في الدم مباشرة (جزر لانجرهانز).</li>
+            <li><strong>خلايا ألفا:</strong> عددها قليل، تفرز <span class="func">الجلوكاجون</span> لرفع سكر الدم (يحول جليكوجين الكبد فقط إلى جلوكوز).</li>
+            <li><strong>خلايا بيتا:</strong> تمثل الأغلبية، تفرز <span class="func">الأنسولين</span> لخفض السكر (يُدخل السكر للخلايا لاكسدته، ويخزنه كجليكوجين/دهون).</li>
+            <li><strong>البول السكري:</strong> سببه نقص الأنسولين، مما يرفع السكر بالدم ويظهر بالبول، مسبباً العطش والتبول المتعدد.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <span class="badge">Male Androgens</span>
+        <h3 class="section-title">💪 الغدد التناسلية - الخصية (الأندروجينات)</h3>
+        <ul>
+            <li><strong>المصدر:</strong> تفرز من <span class="func">الخلايا البينية</span> في الخصية (تحت تأثير هرمون LH).</li>
+            <li><strong>الهرمونات:</strong> التستوستيرون والأندروستيرون.</li>
+            <li><strong>الأهمية:</strong> نمو البروستاتا والحويصلتين المنويتين، وظهور الصفات الجنسية الثانوية الذكرية (خشونة الصوت، نمو العضلات والشعر).</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <span class="badge">Female Estrogens</span>
+        <h3 class="section-title">🌸 الغدد التناسلية - المبيض (الاستروجينات)</h3>
+        <ul>
+            <li><strong>الاستروجين (الاستراديول):</strong> يفرز من حويصلة جراف، مسؤول عن إنماء بطانة الرحم وظهور الخصائص الأنثوية الثانوية.</li>
+            <li><strong>البروجسترون:</strong> يفرز من الجسم الأصفر (والمشيمة لاحقاً)، يزيد سمك بطانة الرحم والإمداد الدموي لها استعداداً ونمواً للحمل.</li>
+            <li><strong>الريلاكسين:</strong> يفرز من الجسم الأصفر والمشيمة وبطانة الرحم، ويسبب ارتخاء <span class="link">الارتفاق العاني</span> لتسهيل الولادة.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <span class="badge">Digestion Signals</span>
+        <h3 class="section-title">🍽️ هرمونات القناة الهضمية</h3>
+        <ul>
+            <li><strong>وظيفة مزدوجة:</strong> الغشاء المخاطي المبطن للقناة الهضمية يفرز العصارات الهاضمة، ويفرز هرمونات تنشط غدد الهضم.</li>
+            <li><strong>الجاسترين:</strong> يفرز من المعدة وينتقل عبر الدم ليعود إليها، محفزاً إياها لإفراز العصير المعدي.</li>
+            <li><strong>السيكريتين والكوليسيستوكينين:</strong> يفرزان من الأمعاء الدقيقة ليتجها نحو <span class="func">البنكرياس</span> لتحفيزه على إفراز عصارته الهاضمة.</li>
+        </ul>
+    </div>
+
 </div>
 
 <script>
-    const chatIn = document.getElementById('chat-in');
-    const chatWindow = document.getElementById('chat-window');
+// --- محرك الجسيمات المتقدم ---
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let currentColor = '#00f2fe'; // اللون الافتراضي
 
-    // جعل مكان الكتابة يتمدد تلقائياً
-    function autoResize(textarea) {
-        textarea.style.height = 'auto';
-        textarea.style.height = textarea.scrollHeight + 'px';
-    }
+function getThemeColor() {
+    // جلب لون الأساس من المتغيرات في CSS
+    const root = document.documentElement;
+    return getComputedStyle(root).getPropertyValue('--particle-color').trim() || '#00f2fe';
+}
 
-    // الرد بالقصيدة
-    const poemResponse = `
-        <span class="poem">سألوني مين اللي صنعك يا ميدو؟</span>
-        <span class="poem">قلتلهم فنان، وعقله موش عادي..</span>
-        <span class="poem">من شركة <b>Codenest</b>، أصله وجودة وجديدو،</span>
-        <span class="poem">هو <b>"ميدو"</b>، العبقري، صاحب الأيادي..</span>
-    `;
-
-    async function processInput() {
-        const val = chatIn.value.trim();
-        if (!val) return;
-
-        addMsg(val, 'user');
-        chatIn.value = "";
-        chatIn.style.height = 'auto';
-        
-        document.getElementById('typing').style.display = 'block';
-
-        // الرد على سؤال "مين عملك"
-        if (val.includes("مين عملك") || val.includes("من صنعك")) {
-            setTimeout(() => {
-                document.getElementById('typing').style.display = 'none';
-                addMsg(poemResponse, 'bot', true);
-            }, 1000);
-            return;
-        }
-
-        // خاصية الرسم
-        if (val.startsWith("ارسم") || val.startsWith("صورة")) {
-            const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(val)}?width=1024&height=1024&nologo=true`;
-            setTimeout(() => {
-                document.getElementById('typing').style.display = 'none';
-                addMsg(`<img src="${imgUrl}" style="width:100%; border-radius:10px; margin-top:10px;">`, 'bot', true);
-            }, 2000);
-            return;
-        }
-
-        // الرد العادي من الذكاء الاصطناعي
-        try {
-            const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(val)}?model=openai`);
-            const text = await res.text();
-            document.getElementById('typing').style.display = 'none';
-            addMsg(text, 'bot');
-        } catch (e) {
-            document.getElementById('typing').style.display = 'none';
-            addMsg("السيرفر هنج يا زميلي، جرب تاني.", 'bot');
-        }
-    }
-
-    function addMsg(content, sender, isHtml = false) {
-        const div = document.createElement('div');
-        div.className = `bubble ${sender}`;
-        if (isHtml) div.innerHTML = content;
-        else div.innerText = content;
-        chatWindow.appendChild(div);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-    }
-
-    // الإرسال بالإنتر (Enter)
-    chatIn.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            processInput();
-        }
+function hexToRgb(hex) {
+    // تحويل الكود السداسي لشفافية
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+        return r + r + g + g + b + b;
     });
-</script>
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : null;
+}
 
+function initParticles() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    particles = [];
+    let count = document.getElementById('pCount').value;
+    currentColor = getThemeColor();
+    
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 2,
+            vy: (Math.random() - 0.5) * 2,
+            size: Math.random() * 2.5 + 0.5
+        });
+    }
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let speedMult = parseFloat(document.getElementById('pSpeed').value);
+    
+    // استخراج قيمة RGB لعمل الشفافية في الخطوط
+    let rgbColor = hexToRgb(currentColor) || '0, 242, 254';
+
+    for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        p.x += p.vx * speedMult;
+        p.y += p.vy * speedMult;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.fillStyle = currentColor;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // رسم الخطوط الشبكية
+        for (let j = i + 1; j < particles.length; j++) {
+            let p2 = particles[j];
+            let dist = Math.sqrt((p.x - p2.x)**2 + (p.y - p2.y)**2);
+            if (dist < 120) {
+                ctx.strokeStyle = `rgba(${rgbColor}, ${1 - dist/120})`;
+                ctx.lineWidth = 0.8;
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            }
+        }
+    }
+    requestAnimationFrame(draw);
+}
+
+function changeTheme() {
+    const theme = document.getElementById('themeSelector').value;
+    if (theme === 'default') {
+        document.documentElement.removeAttribute('data-theme');
+    } else {
+        document.documentElement.setAttribute('data-theme', theme);
+    }
+    
+    // تحديث لون الجسيمات بعد تغيير الثيم بقليل
+    setTimeout(() => {
+        currentColor = getThemeColor();
+    }, 100);
+}
+
+window.addEventListener('resize', initParticles);
+initParticles();
+draw();
+</script>
 </body>
 </html>
